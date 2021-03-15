@@ -1,8 +1,9 @@
-  import React, { Component } from 'react'
+import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import logo from './logo.svg';
+import "bootstrap/dist/css/bootstrap.min.css"
 import './App.css';
-import Seq  from "./Components/seq";
+import Seq  from "./components/seq";
+import 'react-bootstrap/dist/react-bootstrap';
 
 
 class App extends Component {
