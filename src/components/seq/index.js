@@ -10,8 +10,15 @@ import {AddSeq} from "./satellit/addseq"
 
 class Seq extends Component {
 
+  constructor(props) {
+    super(props)
+    this.reqDataCB = this.reqDataCB.bind(this)
+    this.PlusMinusCB = this.PlusMinusCB.bind(this)
+}
+
   state = {
     seqs: [],
+    ext: false
   }
 
 
@@ -21,6 +28,17 @@ class Seq extends Component {
     a2_index : 30,
     a2_value : 201000,
     n_index : 8
+  }
+
+  reqDataCB = () => {
+    axios.get(backendPath + "get")
+    .then(resp => {
+      this.setState({ seqs: resp.data.seqs })
+    })
+  }
+
+  PlusMinusCB = () => {
+      this.setState({ ext: !this.state.ext })
   }
 
 
@@ -152,13 +170,6 @@ class Seq extends Component {
 
   render() {
     const { seqs, menu } = this.state
-    //console.log('From render ', seqs)
-    //console.log(seqs[0])
-//В форе будем i передавать
-    // let num = 1
-    // let oneElem = <Element oneObj = {seqs[0]} num={num} />
-        
-    
     let forRender
     if (seqs) {
       for (let i = 0; i < seqs.length; i++) {
@@ -166,7 +177,7 @@ class Seq extends Component {
       }
     forRender = seqs.map(item =>
       <div key={uuid()}>
-        <Element oneObj = {item} />
+        <Element oneObj = {item} reqDataCB = {this.reqDataCB}/>
       </div>
     )
   }
@@ -186,7 +197,7 @@ class Seq extends Component {
 
         {forRender}
         <br />
-        <AddSeq />
+        <AddSeq refreshCB = {this.reqDataCB} ext = {this.state.ext} PlusMinusCB = {this.PlusMinusCB}/>
       </>
     )
 

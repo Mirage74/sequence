@@ -5,13 +5,17 @@ import { backendPath } from "../../../../../config"
 
 
 export const useSeq = () => {
-  
-  
+
+
   // const [addUser, { data }] = useMutation(mutationCreateAccount);
   const [values, setValues] = useState({
-    res : "?",
-    newSeq : {
-      A1 : "999"
+    res: "?",
+    newSeq: {
+      a1_index: "",
+      a1_value: "",
+      a2_index: "",
+      a2_value: "",
+      n_index: "",
     }
   })
 
@@ -28,38 +32,45 @@ export const useSeq = () => {
 
 
   const handleChange = (event) => {
-    //console.log("handleChange")
+    //console.log(values.newSeq)
     setValues((prevValues) => (
       {
-        account: {
-        ...prevValues.account,
-        [event.target.name]: event.target.value
-      }
-    }))
+        newSeq: {
+          ...prevValues.newSeq,
+          [event.target.name]: event.target.value
+        }
+      }))
   }
 
 
-  const onDeleteClick = (id) => {
+  const onDeleteClick = (id, reqDataCB) => {
     console.log("id from del : ", id)
 
-    // axios.delete(backendPath + `remove/${id}`)
-    //     .then (res => {
-    //       console.log(res.data)
-    //     })
+    axios.delete(backendPath + `remove/${id}`)
+      .then(res => {
+        reqDataCB()
+        console.log(res.data)
+      })
+      
   }
 
-  
-  const handleSubmit = (event) => {
-   console.log("hello from submit !")
-  }
-  
 
-  
+  const handleSubmit =  async (seq, refreshCB) => {
+    console.log(seq)
+    let res = await axios.post(backendPath + 'create', seq)
+      .catch(err => { console.log("error creating new newSeq : ", err) })
+    console.log("рес дата", res.data)  
+    refreshCB()
+    return res.data
+  }
+
+
+
   return {
     solveHandle,
     onDeleteClick,
     handleChange,
     handleSubmit,
-    state : values
+    state: values
   }
 };

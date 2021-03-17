@@ -8,6 +8,7 @@ import { useSeq } from './hooks/useSeq'
 
 export const Element = (params) => {
     let oneObj = params.oneObj
+    //console.log(params.abrakadabra)
     const { solveHandle, onDeleteClick, state } = useSeq();
     const _id = oneObj && oneObj._id
 
@@ -17,29 +18,29 @@ export const Element = (params) => {
                     <Col sm={{ span: 1, offset: 0 }}>
                         <h4><Badge variant="info">{oneObj.num}</Badge></h4>
                     </Col>
-                    <Col sm={{ span: 1, offset: 0 }} className="bg-secondary">
+                    <Col sm={{ span: 1, offset: 0 }} className="bg-light">
                         a<sub>{oneObj.a1_index}</sub> = {oneObj.a1_value}
                     </Col>
-                    <Col sm={{ span: 1, offset: 0 }} className="bg-secondary">
+                    <Col sm={{ span: 1, offset: 0 }} className="bg-light">
                         a<sub>{oneObj.a2_index}</sub> = {oneObj.a2_value}
                     </Col>
-                    <Col sm={{ span: 1, offset: 0 }} className="bg-secondary" >
+                    <Col sm={{ span: 1, offset: 0 }} className="bg-light" >
                         n = {oneObj.n_index}
                     </Col>
-                    <Col sm={{ span: 1, offset: 1 }} className="bg-secondary" >
+                    <Col sm={{ span: 1, offset: 1 }} className="bg-light" >
                         Result:
                     </Col>
-                    <Col sm={{ span: 1, offset: 0 }} className="bg-secondary" >
+                    <Col sm={{ span: 1, offset: 0 }} className="bg-light" >
                         {state.res}
                     </Col>
-                    <Col sm={{ span: 1, offset: 0 }} className="bg-secondary" >
+                    <Col sm={{ span: 1, offset: 0 }} className="bg-light" >
                         <Button className="bg-primary" onClick={(e) => solveHandle(oneObj)}>SOLVE</Button>
                     </Col>
                     <Col sm={{ span: 1, offset: 2 }} className="text-right" >
                         <h4>
                             <i className="fas fa-times"
                                 style={{ cursor: 'pointer', float: 'right', color: 'red' }}
-                                onClick={(e) => onDeleteClick(oneObj._id)}
+                                onClick={(e) => onDeleteClick(oneObj._id, params.reqDataCB)}
                             />
                             <Link to={{
                                 pathname: ``,
